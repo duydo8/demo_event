@@ -25,6 +25,7 @@ public class Accounts {
 	private String phone;
 	private String email;
 	private String address;
+	private String verifyCode;
 
 	public Accounts(String username, String password) {
 		this.username = username;
