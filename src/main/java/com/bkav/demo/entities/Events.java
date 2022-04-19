@@ -1,10 +1,12 @@
 package com.bkav.demo.entities;
 
+import java.time.LocalDate;
+
+import javax.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,6 +23,15 @@ public class Events {
 	@Column(name="date_end")
 	private Long dateEnd;
 	private String Description;
+	@ManyToOne
+	@JoinColumn(name="username")
+	private Accounts accounts;
 
-
+	public Events(int id, String eventName, Long dateCreated, Long dateEnd, String description) {
+		this.id = id;
+		this.eventName = eventName;
+		this.dateCreated = dateCreated;
+		this.dateEnd = dateEnd;
+		Description = description;
+	}
 }

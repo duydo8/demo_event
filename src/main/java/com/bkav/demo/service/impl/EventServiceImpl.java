@@ -25,7 +25,14 @@ public class EventServiceImpl implements EventService{
 		// TODO Auto-generated method stub
 		return service.save(e);
 	}
-
+	@Override
+	public Events findByIdPerSon(String username){
+		return service.getEventsByAccountsUserName(username);
+	}
+	@Override
+	public Events findByIdPerSonAndId(String username,int id){
+		return service.getEventsByAccountsUserNameAndId(username,id);
+	}
 	@Override
 	public void delete(int id) {
 		// TODO Auto-generated method stub
