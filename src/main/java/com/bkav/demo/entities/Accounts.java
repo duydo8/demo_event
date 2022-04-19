@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,8 +20,8 @@ public class Accounts {
 	private String password;
 	private String fullname;
 
-	@Column(name="date_of_birth",columnDefinition = "DATE")
-	private LocalDate dob;
+	@Column(name="date_of_birth")
+	private Long dob;
 	private String phone;
 	private String email;
 	private String address;
@@ -29,6 +30,7 @@ public class Accounts {
 		this.username = username;
 		this.password = password;
 	}
+
 	@OneToMany(mappedBy = "accounts")
 	List<Events> listEvent;
 }

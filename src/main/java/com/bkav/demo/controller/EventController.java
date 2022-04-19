@@ -19,24 +19,24 @@ public class EventController {
     AccountService accountService;
     @PostMapping("createEvent")
     public ResponseEntity<Events> createEvent(@RequestBody Events event,@RequestParam("idPerson") String username) {
-        Events e=eventService.findByIdPerSon(username);
+
         Accounts acc= accountService.findById(username).get();
         event.setAccounts(acc);
-        return ResponseEntity.ok().body(eventService.save(e));
+        return ResponseEntity.ok().body(eventService.save(event));
     }
     @PutMapping("updateEvent")
     public ResponseEntity<Events> updateEvent(@RequestBody Events event,@RequestParam("idPerson") String username){
 
-        Events e=eventService.findByIdPerSon(username);
+        Events e=eventService.findByIdPerSonAndId(username,event.getId());
         e.setDateCreated(event.getDateCreated());
         e.setEventName(event.getEventName());
         e.setDateEnd(event.getDateEnd());
         e.setDescription(event.getDescription());
 
-        return ResponseEntity.ok(eventService.update(event));
+        return ResponseEntity.ok(eventService.update(e));
     }
     @DeleteMapping("deleteEvent")
-    public ResponseEntity<?> delete(@PathVariable("id")int id,@RequestParam("idPerson") String username){
+    public ResponseEntity<?> delete(@RequestParam("idEvent")int id,@RequestParam("idPerson") String username){
         Events e=eventService.findByIdPerSonAndId(username,id);
         eventService.delete(e.getId());
         return ResponseEntity.ok().body(null);
