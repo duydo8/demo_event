@@ -31,7 +31,11 @@ public class Accounts {
 		this.username = username;
 		this.password = password;
 	}
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="accounts")
+	private RoleAccount roleAccount;
 
 	@OneToMany(mappedBy = "accounts")
-	List<Events> listEvent;
+	private List<Events> listEvent;
 }

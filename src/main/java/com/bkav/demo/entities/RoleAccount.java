@@ -1,5 +1,6 @@
 package com.bkav.demo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,9 +16,11 @@ public class RoleAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="accounts")
     private Accounts accounts;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="role")
     private Role role;
