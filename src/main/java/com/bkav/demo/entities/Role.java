@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Data
@@ -18,8 +15,8 @@ import java.util.List;
 
 public class Role {
     @Id
+    @Column(name="role_n")
     private String roleName;
 
-    @OneToMany(mappedBy = "role")
-    List<RoleAccount> roleAccountList;
+
 }

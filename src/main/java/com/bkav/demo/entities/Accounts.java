@@ -2,6 +2,7 @@ package com.bkav.demo.entities;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -33,9 +34,14 @@ public class Accounts {
 	}
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name="accounts")
-	private RoleAccount roleAccount;
+	@JoinColumn(name="role_name")
+	private Role role;
 
-	@OneToMany(mappedBy = "accounts")
-	private List<Events> listEvent;
+	@OneToMany(mappedBy = "accountCreator")
+	private List<AccountEvent> listEvent;
+
+	@ManyToMany (mappedBy = "accountsList")
+	private List<AccountEvent> accountEventList;
+
+
 }

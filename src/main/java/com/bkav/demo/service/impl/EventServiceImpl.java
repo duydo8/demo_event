@@ -17,6 +17,7 @@ public class EventServiceImpl implements EventService{
 	@Override
 	public Events save(Events e) {
 		// TODO Auto-generated method stub
+
 		return service.save(e);
 	}
 
