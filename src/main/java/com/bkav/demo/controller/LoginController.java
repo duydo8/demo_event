@@ -10,23 +10,29 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bkav.demo.entities.Accounts;
 import com.bkav.demo.service.AccountService;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import java.time.LocalDate;
+
 @RestController
 public class LoginController {
 	@Autowired
 	AccountService service;
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestParam("username")String user,@RequestParam("password")String pass){
+		System.out.println("chai");
+
 		Accounts a = new Accounts("duyzt1","123");
 		service.save(a);
 		Accounts acc=  service.findById(user).get();
 		if(acc==null) {
 			return ResponseEntity.notFound().build();
-		}{
-			if(acc.getPassword().equals(pass)) {
+		}else if(acc.getPassword().equals(pass)) {
 				return ResponseEntity.ok().body(null);
-			}
+		}else {
+
+			return ResponseEntity.badRequest().body(null);
 		}
-		return  ResponseEntity.badRequest().body(null);
 	}
 	
 }

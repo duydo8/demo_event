@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.bkav.demo.entities.Events;
 import com.bkav.demo.repository.EventRepository;
 import com.bkav.demo.service.EventService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class EventServiceImpl implements EventService{
 	
 	@Autowired

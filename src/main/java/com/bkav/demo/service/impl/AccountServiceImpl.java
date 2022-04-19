@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.bkav.demo.entities.Accounts;
 import com.bkav.demo.repository.AccountRepository;
 import com.bkav.demo.service.AccountService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AccountServiceImpl implements AccountService {
 	@Autowired
 	AccountRepository service;
