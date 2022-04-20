@@ -38,10 +38,8 @@ public class Accounts {
 	private Role role;
 
     @OneToMany(mappedBy = "accountCreator")
-	private List<AccountEvent> listEvent;
+	private List<Events> listEvent;
 
-    @ManyToMany(mappedBy = "accountsList")
-	private List<AccountEvent> accountEventList;
 
 	@Override
 	public String toString() {

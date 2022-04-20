@@ -30,6 +30,9 @@ public class Events {
 	@OneToMany (mappedBy = "events")
 	private List<AccountEvent> accountEventList;
 
+	@ManyToOne
+	@JoinColumn(name = "username")
+	private Accounts accountCreator;
 
 	public Events(Long id, String eventName, Long dateCreated, Long dateEnd, String description) {
 		this.id = id;

@@ -1,8 +1,10 @@
 package com.bkav.demo.controller;
 
 import com.bkav.demo.entities.AccountEvent;
+import com.bkav.demo.entities.AccountEventAttendent;
 import com.bkav.demo.entities.Accounts;
 import com.bkav.demo.entities.Events;
+import com.bkav.demo.service.AccountEventAttendentService;
 import com.bkav.demo.service.AccountEventService;
 import com.bkav.demo.service.AccountService;
 import com.bkav.demo.service.EventService;
@@ -23,12 +25,13 @@ public class EventController {
     AccountService accountService;
     @Autowired
     AccountEventService accountEventService;
-
+    @Autowired
+    AccountEventAttendentService accountEventAttendentService;
     @PostMapping("createEvent")
     public ResponseEntity<AccountEvent> createEvent(@RequestBody Events event, @RequestParam("idAccountCreator") String username) {
         AccountEvent accountEvent = new AccountEvent();
 
-        accountEvent.setAccountCreator(accountService.findById(username).get());
+
 
         accountEvent.setEvents(event);
 
@@ -36,20 +39,30 @@ public class EventController {
         return ResponseEntity.ok().body(accountEventService.save(accountEvent));
     }
 
-    @PostMapping("addEventWithOneMember")
-    public ResponseEntity<Events> AddOneAccountMemberEvent(@RequestBody Accounts acc, @RequestParam("idEvent") Long id) {
+    @PostMapping("addOneAccountInEvent")
+    public ResponseEntity<Events> AddOneAccountMemberEvent(@RequestBody AccountEventAttendent acc,
+                                                           @RequestParam("idEvent") Long id) {
         Optional<Events> e = eventService.findByIdEvent(id);
 
-    Integer
-        List<AccountEvent> accountEventList = e.get().getAccountEventList();
-        AccountEvent accountEvent = new AccountEvent();
-       // accountEvent.setAccountsList(Arrays.asList(acc));
+        AccountEvent accountEvent= new AccountEvent();
+        accountEvent.setEvents(e.get());
+        accountEvent.setAccountEventAttendentList(Arrays.asList(acc));
 
-        accountEventList.add(accountEvent);
-        accountEvent.setAccountCreator(accountService.getAccountCreatorByEventId(id));
+
+        e.get().getAccountEventList().add(accountEvent);
+
+        accountEventAttendentService.save(acc);
         accountEventService.save(accountEvent);
-
         return ResponseEntity.ok().body(eventService.save(e.get()));
+//        List<AccountEvent> accountEventList = e.get().getAccountEventList();
+//        AccountEvent accountEvent = new AccountEvent();
+//       // accountEvent.setAccountsList(Arrays.asList(acc));
+//
+//        accountEventList.add(accountEvent);
+//        accountEvent.setAccountCreator(accountService.getAccountCreatorByEventId(id));
+//        accountEventService.save(accountEvent);
+
+
 
 
     }
@@ -62,15 +75,23 @@ public class EventController {
 
 
     @PostMapping("addEventWithListMember")
-    public ResponseEntity<Events> AddListAccountMemberEvent(@RequestBody List<Accounts> accountsList, @RequestParam("idEvent") Long id) {
+    public ResponseEntity<Events> AddListAccountMemberEvent(@RequestBody List<AccountEventAttendent> accountEventAttendentList
+            , @RequestParam("idEvent") Long id) {
         Optional<Events> e = eventService.findByIdEvent(id);
 
-            List<AccountEvent> accountEventList = e.get().getAccountEventList();
-            AccountEvent accountEvent = new AccountEvent();
-            accountEvent.setAccountsList(accountsList);
-            accountEventList.add(accountEvent);
-            accountEvent.setAccountCreator(accountService.getAccountCreatorByEventId(id));
-            return ResponseEntity.ok().body(eventService.save(e.get()));
+        AccountEvent accountEvent= new AccountEvent();
+        accountEvent.setEvents(e.get());
+        accountEvent.setAccountEventAttendentList(accountEventAttendentList);
+
+
+        e.get().getAccountEventList().add(accountEvent);
+        for (AccountEventAttendent aea: accountEventAttendentList
+             ) {
+            accountEventAttendentService.save(aea);
+        }
+
+        accountEventService.save(accountEvent);
+        return ResponseEntity.ok().body(eventService.save(e.get()));
 
 
     }

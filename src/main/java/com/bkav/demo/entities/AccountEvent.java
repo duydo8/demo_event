@@ -19,9 +19,6 @@ public class AccountEvent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEvent;
 
-    @ManyToOne
-    @JoinColumn(name = "username")
-    private Accounts accountCreator;
 
     @OneToMany(mappedBy = "accountEvent")
     private List<AccountEventAttendent> accountEventAttendentList;
