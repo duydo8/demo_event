@@ -31,37 +31,38 @@ public class EventController {
         accountEvent.setAccountCreator(accountService.findById(username).get());
 
         accountEvent.setEvents(event);
-//      System.out.println("NguyenNH after: "+acc);
 
         eventService.save(event);
         return ResponseEntity.ok().body(accountEventService.save(accountEvent));
     }
 
     @PostMapping("addEventWithOneMember")
-    public ResponseEntity<Events> AddOneAccountMemberEvent(@RequestBody Accounts acc, @RequestParam("idEvent") int id) {
+    public ResponseEntity<Events> AddOneAccountMemberEvent(@RequestBody Accounts acc, @RequestParam("idEvent") Long id) {
         Optional<Events> e = eventService.findByIdEvent(id);
 
 
         List<AccountEvent> accountEventList = e.get().getAccountEventList();
         AccountEvent accountEvent = new AccountEvent();
-        accountEvent.setAccountsList(Arrays.asList(acc));
+       // accountEvent.setAccountsList(Arrays.asList(acc));
+
         accountEventList.add(accountEvent);
         accountEvent.setAccountCreator(accountService.getAccountCreatorByEventId(id));
         accountEventService.save(accountEvent);
+
         return ResponseEntity.ok().body(eventService.save(e.get()));
 
 
     }
 
-    //getlistEvent
+
     @GetMapping("/getListEventByAccountMemberUsername")
     public ResponseEntity<List<Events>> getListEventByAccountMemberUsername(@RequestParam("memberUsername") String name) {
         return ResponseEntity.ok().body(eventService.getListEventByAccountMemberId(name));
     }
-    // getListUserAttend
+
 
     @PostMapping("addEventWithListMember")
-    public ResponseEntity<Events> AddListAccountMemberEvent(@RequestBody List<Accounts> accountsList, @RequestParam("idEvent") int id) {
+    public ResponseEntity<Events> AddListAccountMemberEvent(@RequestBody List<Accounts> accountsList, @RequestParam("idEvent") Long id) {
         Optional<Events> e = eventService.findByIdEvent(id);
 
             List<AccountEvent> accountEventList = e.get().getAccountEventList();

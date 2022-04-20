@@ -36,12 +36,15 @@ public class Accounts {
 	@ManyToOne
 	@JoinColumn(name="role_name")
 	private Role role;
-    @JsonIgnore
+
     @OneToMany(mappedBy = "accountCreator")
 	private List<AccountEvent> listEvent;
 
     @ManyToMany(mappedBy = "accountsList")
 	private List<AccountEvent> accountEventList;
 
-
+	@Override
+	public String toString() {
+		return "alo";
+	}
 }

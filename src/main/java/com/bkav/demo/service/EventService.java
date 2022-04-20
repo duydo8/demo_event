@@ -11,11 +11,11 @@ public interface EventService {
     Events update(Events e);
 
 
-    void delete(int id);
+    void delete(Long id);
 
     List<Events> getAll();
 
-    Optional<Events> findByIdEvent(int id);
+    Optional<Events> findByIdEvent(Long id);
 
     List<Events> getListEventByAccountMemberId(String usernameAccountMember);
 }

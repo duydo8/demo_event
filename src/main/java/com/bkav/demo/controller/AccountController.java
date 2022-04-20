@@ -41,7 +41,8 @@ public class AccountController {
     }
 
     @GetMapping("/getListAccountByIdEvent")
-    public ResponseEntity<List<Accounts>> getListAccountByIdEvent(@RequestParam("idEvent") int idEvent) {
+    public ResponseEntity<List<Accounts>> getListAccountByIdEvent(@RequestParam("idEvent") Long idEvent) {
+
         return ResponseEntity.ok().body(accountService.getListAccountByIdEvent(idEvent));
     }
 }

@@ -17,22 +17,18 @@ import java.util.List;
 public class AccountEvent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idEvent;
+    private Long idEvent;
 
     @ManyToOne
     @JoinColumn(name = "username")
     private Accounts accountCreator;
 
-    @ManyToMany
-    @JoinTable(name = "AcountEventTable", joinColumns = @JoinColumn(name = "idEvent"),
-            inverseJoinColumns = @JoinColumn(name = "username"))
-    private List<Accounts> accountsList ;
-    @JsonIgnore
+    @OneToMany(mappedBy = "accountEvent")
+    private List<AccountEventAttendent> accountEventAttendentList;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
     private Events events;
 
-    public String toString() {
-        return "accountCreator " + accountsList;
-    }
+
 }

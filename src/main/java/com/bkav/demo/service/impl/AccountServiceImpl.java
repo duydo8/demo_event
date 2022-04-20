@@ -39,12 +39,12 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public Accounts getAccountCreatorByEventId(int idEvent) {
+	public Accounts getAccountCreatorByEventId(Long idEvent) {
 		return service.getAccountCreatorByEventId(idEvent);
 	}
 
 	@Override
-	public List<Accounts> getListAccountByIdEvent(int idEvent) {
+	public List<Accounts> getListAccountByIdEvent(Long idEvent) {
 		return service.getListAccountByIdEvent(idEvent);
 	}
 

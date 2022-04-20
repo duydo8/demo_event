@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface EventRepository extends JpaRepository<Events, Integer> {
+public interface EventRepository extends JpaRepository<Events, Long> {
     @Query(value = "select * from acount_event_table aet join accounts ac on aet.username=ac.username "+
             "join events e on e.id=aet.id_event "+
             "where ac.username=?1", nativeQuery = true)

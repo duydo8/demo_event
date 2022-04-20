@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class Events {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	@Column(name="event_name")
 	private String eventName;
 	@Column(name="date_created")
@@ -31,7 +31,7 @@ public class Events {
 	private List<AccountEvent> accountEventList;
 
 
-	public Events(int id, String eventName, Long dateCreated, Long dateEnd, String description) {
+	public Events(Long id, String eventName, Long dateCreated, Long dateEnd, String description) {
 		this.id = id;
 		this.eventName = eventName;
 		this.dateCreated = dateCreated;
