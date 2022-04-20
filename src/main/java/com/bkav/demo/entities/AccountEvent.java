@@ -6,30 +6,33 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="Account_Event")
+@Table(name = "Account_Event")
 public class AccountEvent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idEvent;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="username")
+    @ManyToOne
+    @JoinColumn(name = "username")
     private Accounts accountCreator;
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(name="AcountEventTable",joinColumns = @JoinColumn(name="idEvent"),
-            inverseJoinColumns = @JoinColumn(name="username"))
-    private List<Accounts> accountsList;
 
+    @ManyToMany
+    @JoinTable(name = "AcountEventTable", joinColumns = @JoinColumn(name = "idEvent"),
+            inverseJoinColumns = @JoinColumn(name = "username"))
+    private List<Accounts> accountsList ;
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="id")
+    @JoinColumn(name = "id")
     private Events events;
 
-
+    public String toString() {
+        return "accountCreator " + accountsList;
+    }
 }

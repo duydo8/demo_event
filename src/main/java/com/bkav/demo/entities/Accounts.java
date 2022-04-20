@@ -1,23 +1,23 @@
 package com.bkav.demo.entities;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Set;
-
-import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import javax.persistence.*;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity
-@Table(name="accounts")
+@Table(name = "accounts")
 public class Accounts {
-	@Id
-	private String username;
+    @Id
+    private String username;
 	private String password;
 	private String fullname;
 
@@ -36,11 +36,11 @@ public class Accounts {
 	@ManyToOne
 	@JoinColumn(name="role_name")
 	private Role role;
-
-	@OneToMany(mappedBy = "accountCreator")
+    @JsonIgnore
+    @OneToMany(mappedBy = "accountCreator")
 	private List<AccountEvent> listEvent;
 
-	@ManyToMany (mappedBy = "accountsList")
+    @ManyToMany(mappedBy = "accountsList")
 	private List<AccountEvent> accountEventList;
 
 

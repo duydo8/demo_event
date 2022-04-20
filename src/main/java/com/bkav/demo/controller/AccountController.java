@@ -22,13 +22,26 @@ public class AccountController {
         return ResponseEntity.ok(accountService.save(accounts));
     }
     @PutMapping("updateAccount")
-    public ResponseEntity<Accounts> updateAccount(@RequestBody Accounts acc){
+    public ResponseEntity<Accounts> updateAccount(@RequestBody Accounts acc) {
         return ResponseEntity.ok().body(accountService.save(acc));
 
     }
+
     @DeleteMapping("deleteAccount")
-    public ResponseEntity<?> deleteAccount(@RequestParam("username") String name){
-        accountService.delete(name);
-        return  ResponseEntity.ok().body(null);
+    public ResponseEntity<?> deleteAccount(@RequestParam("username") String name) {
+
+
+        return ResponseEntity.ok().body(null);
+    }
+
+    @GetMapping("findAccountByUsername")
+    public ResponseEntity<Accounts> findAccount(@RequestParam("username") String name) {
+        return ResponseEntity.ok().body(accountService.findById(name).get());
+
+    }
+
+    @GetMapping("/getListAccountByIdEvent")
+    public ResponseEntity<List<Accounts>> getListAccountByIdEvent(@RequestParam("idEvent") int idEvent) {
+        return ResponseEntity.ok().body(accountService.getListAccountByIdEvent(idEvent));
     }
 }
