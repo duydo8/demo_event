@@ -40,7 +40,7 @@ public class EventController {
     public ResponseEntity<Events> AddOneAccountMemberEvent(@RequestBody Accounts acc, @RequestParam("idEvent") Long id) {
         Optional<Events> e = eventService.findByIdEvent(id);
 
-
+    Integer
         List<AccountEvent> accountEventList = e.get().getAccountEventList();
         AccountEvent accountEvent = new AccountEvent();
        // accountEvent.setAccountsList(Arrays.asList(acc));
