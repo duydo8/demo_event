@@ -1,8 +1,10 @@
 package com.bkav.demo.service.impl;
 
 import com.bkav.demo.entities.AccountEvent;
+import com.bkav.demo.entities.AccountEventAttendent;
 import com.bkav.demo.entities.Accounts;
 import com.bkav.demo.entities.Events;
+import com.bkav.demo.repository.AccountEventAttendantRepository;
 import com.bkav.demo.repository.EventRepository;
 import com.bkav.demo.service.AccountService;
 import com.bkav.demo.service.EventService;
@@ -19,7 +21,8 @@ public class EventServiceImpl implements EventService{
 	
 	@Autowired
 	EventRepository service;
-
+	@Autowired
+	AccountEventAttendantRepository accountEventAttendantRepository;
 	@Autowired
 	AccountService accountService;
 	@Override
@@ -55,16 +58,18 @@ public class EventServiceImpl implements EventService{
 
 	@Override
 	public List<Events> getListEventByAccountMemberId(String usernameAccountMember) {
-		Accounts acc=accountService.findById(usernameAccountMember).get();
-
-		List<AccountEvent>accountEventList=acc.getAccountEventList();
-		List<Events> eventsList =new ArrayList<>();
-		for (AccountEvent ae :accountEventList) {
-			System.out.println(ae.toString());;
-			eventsList.add(ae.getEvents());
-		}
-		return eventsList;
+//		AccountEventAttendent aacc=accountEventAttendantRepository.findById(usernameAccountMember).get();
+//
+//		AccountEvent accountEvent=aacc.getAccountEvent();
+//		accountEvent.getEvents();
+//		List<Events> eventsList =new ArrayList<>();
+//		for (AccountEvent ae :accountEventList) {
+//			System.out.println(ae.toString());;
+//			eventsList.add(ae.getEvents());
+//		}
+//		return eventsList;
 		//return service.getListEventByAccountMemberId(usernameAccountMember);
+		return null;
 	}
 
 
