@@ -1,9 +1,6 @@
 package com.bkav.demo.controller;
 
-import com.bkav.demo.entities.AccountEvent;
-import com.bkav.demo.entities.AccountEventAttendent;
-import com.bkav.demo.entities.Accounts;
-import com.bkav.demo.entities.Events;
+import com.bkav.demo.entities.*;
 import com.bkav.demo.service.AccountEventAttendentService;
 import com.bkav.demo.service.AccountEventService;
 import com.bkav.demo.service.AccountService;
@@ -12,6 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.temporal.ChronoField;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -28,39 +30,33 @@ public class EventController {
     @Autowired
     AccountEventAttendentService accountEventAttendentService;
     @PostMapping("createEvent")
-    public ResponseEntity<AccountEvent> createEvent(@RequestBody Events event, @RequestParam("idAccountCreator") String username) {
-        AccountEvent accountEvent = new AccountEvent();
-
-
-
-        accountEvent.setEvents(event);
-
-        eventService.save(event);
-        return ResponseEntity.ok().body(accountEventService.save(accountEvent));
+    public ResponseEntity<Events> createEvent(@RequestBody Events event) {
+        // lay account creator
+        Accounts accounts= event.getAccountCreator();
+//        them event vaof account event
+        List<Events> eventsList=new ArrayList<>();//accounts.getListEvent();
+//        Events e=eventService.save(event);
+        eventsList.add(event);
+        accounts.setListEvent(eventsList);
+        accountService.save(accounts);
+        return ResponseEntity.ok().body(eventService.save(event));
     }
 
     @PostMapping("addOneAccountInEvent")
-    public ResponseEntity<Events> AddOneAccountMemberEvent(@RequestBody AccountEventAttendent acc,
+    public ResponseEntity<AccountEvent> AddOneAccountMemberEvent(@RequestBody AccountEventAttendent acc,
                                                            @RequestParam("idEvent") Long id) {
         Optional<Events> e = eventService.findByIdEvent(id);
-
         AccountEvent accountEvent= new AccountEvent();
+        Long dateAdd = LocalDate.now().getLong(ChronoField.EPOCH_DAY);
         accountEvent.setEvents(e.get());
-        accountEvent.setAccountEventAttendentList(Arrays.asList(acc));
+        accountEvent.setAccountEventAttendent(acc);
+        accountEvent.setDateAdd(dateAdd);
+        accountEvent.setAccountEventId(new AccountEventId(acc.getUsername(),id));
 
-
-        e.get().getAccountEventList().add(accountEvent);
 
         accountEventAttendentService.save(acc);
-        accountEventService.save(accountEvent);
-        return ResponseEntity.ok().body(eventService.save(e.get()));
-//        List<AccountEvent> accountEventList = e.get().getAccountEventList();
-//        AccountEvent accountEvent = new AccountEvent();
-//       // accountEvent.setAccountsList(Arrays.asList(acc));
-//
-//        accountEventList.add(accountEvent);
-//        accountEvent.setAccountCreator(accountService.getAccountCreatorByEventId(id));
-//        accountEventService.save(accountEvent);
+
+        return ResponseEntity.ok().body(accountEventService.save(accountEvent));
 
 
 
@@ -74,45 +70,28 @@ public class EventController {
     }
 
 
-    @PostMapping("addEventWithListMember")
+    @PostMapping("addListMemberInEvent")
     public ResponseEntity<Events> AddListAccountMemberEvent(@RequestBody List<AccountEventAttendent> accountEventAttendentList
             , @RequestParam("idEvent") Long id) {
         Optional<Events> e = eventService.findByIdEvent(id);
-
-        AccountEvent accountEvent= new AccountEvent();
-        accountEvent.setEvents(e.get());
-        accountEvent.setAccountEventAttendentList(accountEventAttendentList);
-
-
-        e.get().getAccountEventList().add(accountEvent);
-        for (AccountEventAttendent aea: accountEventAttendentList
+        for (AccountEventAttendent acc:accountEventAttendentList
              ) {
-            accountEventAttendentService.save(aea);
+            AccountEvent accountEvent= new AccountEvent();
+            Long dateAdd = LocalDate.now().getLong(ChronoField.EPOCH_DAY);
+            accountEvent.setEvents(e.get());
+            accountEvent.setAccountEventAttendent(acc);
+            accountEvent.setDateAdd(dateAdd);
+            accountEvent.setAccountEventId(new AccountEventId(acc.getUsername(),id));
+            accountEventAttendentService.save(acc);
         }
 
-        accountEventService.save(accountEvent);
+
         return ResponseEntity.ok().body(eventService.save(e.get()));
 
 
     }
 
-    //    @PutMapping("updateEvent")
-//    public ResponseEntity<Events> updateEvent(@RequestBody Events event,@RequestParam("idPerson") String username){
-//
-//        Events e=eventService.findByIdPerSonAndId(username,event.getId());
-//        e.setDateCreated(event.getDateCreated());
-//        e.setEventName(event.getEventName());
-//        e.setDateEnd(event.getDateEnd());
-//        e.setDescription(event.getDescription());
-//
-//        return ResponseEntity.ok(eventService.update(e));
-//    }
-//    @DeleteMapping("deleteEvent")
-//    public ResponseEntity<?> delete(@RequestParam("idEvent")int id,@RequestParam("idPerson") String username){
-//        Events e=eventService.findByIdPerSonAndId(username,id);
-//        eventService.delete(e.getId());
-//        return ResponseEntity.ok().body(null);
-//    }
+
     @GetMapping("findAllEvent")
     public ResponseEntity<List<Events>> getList() {
         return ResponseEntity.ok(eventService.getAll());

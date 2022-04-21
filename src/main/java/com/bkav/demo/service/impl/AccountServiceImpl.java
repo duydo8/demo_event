@@ -38,10 +38,7 @@ public class AccountServiceImpl implements AccountService {
 		return service.findById(id);
 	}
 
-	@Override
-	public Accounts getAccountCreatorByEventId(Long idEvent) {
-		return service.getAccountCreatorByEventId(idEvent);
-	}
+
 
 	@Override
 	public List<Accounts> getListAccountByIdEvent(Long idEvent) {

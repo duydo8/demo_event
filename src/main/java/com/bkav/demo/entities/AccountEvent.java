@@ -10,22 +10,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "Account_Event")
 public class AccountEvent {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idEvent;
+    @EmbeddedId
+    private  AccountEventId accountEventId;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="account_event_attendent_user")
+    AccountEventAttendent accountEventAttendent;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn
+    Events events;
+    @Column(name="date_add")
+    private Long dateAdd;
 
-
-    @OneToMany(mappedBy = "accountEvent")
-    private List<AccountEventAttendent> accountEventAttendentList;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
-    private Events events;
 
 
 }

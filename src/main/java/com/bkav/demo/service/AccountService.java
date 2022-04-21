@@ -16,7 +16,7 @@ public interface AccountService {
 
 	Optional<Accounts> findById(String id);
 
-	Accounts getAccountCreatorByEventId(Long idEvent);
+
 
 	List<Accounts> getListAccountByIdEvent(Long idEvent);
 }

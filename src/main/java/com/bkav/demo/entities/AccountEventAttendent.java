@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -24,7 +25,6 @@ public class AccountEventAttendent {
     private String address;
     private String verifyCode;
 
-    @ManyToOne
-    @JoinColumn(name="account_attendnet")
-    private AccountEvent accountEvent;
+    @OneToMany (mappedBy = "accountEventAttendent")
+    private List<AccountEvent> accountEventListDem;
 }

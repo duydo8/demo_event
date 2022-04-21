@@ -28,17 +28,18 @@ public class Events {
 
 
 	@OneToMany (mappedBy = "events")
-	private List<AccountEvent> accountEventList;
+	private List<AccountEvent> accountEventListDemo;
 
 	@ManyToOne
 	@JoinColumn(name = "username")
 	private Accounts accountCreator;
 
-	public Events(Long id, String eventName, Long dateCreated, Long dateEnd, String description) {
+	public Events(Long id, String eventName, Long dateCreated, Long dateEnd, String description, Accounts accountCreator) {
 		this.id = id;
 		this.eventName = eventName;
 		this.dateCreated = dateCreated;
 		this.dateEnd = dateEnd;
 		Description = description;
+		this.accountCreator = accountCreator;
 	}
 }

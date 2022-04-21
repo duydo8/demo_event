@@ -12,8 +12,7 @@ public interface AccountRepository extends JpaRepository<Accounts, String> {
     @Query("select a from Accounts  a where a.username=?1")
     Accounts findByUsername(String username);
 
-    @Query("select ae.accountCreator from Events e join AccountEvent ae on e.id=ae.events.id where e.id=?1")
-    public Accounts getAccountCreatorByEventId(Long idEvent);
+
 
     @Query(value = "select * from acount_event_table aet join accounts ac on aet.username=ac.username \n" +
             "join events e on e.id=aet.id_event\n" +

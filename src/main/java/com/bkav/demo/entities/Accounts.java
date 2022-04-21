@@ -36,7 +36,7 @@ public class Accounts {
 	@ManyToOne
 	@JoinColumn(name="role_name")
 	private Role role;
-
+	@JsonIgnore
     @OneToMany(mappedBy = "accountCreator")
 	private List<Events> listEvent;
 
